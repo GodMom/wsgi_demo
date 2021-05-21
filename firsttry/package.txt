@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 certifi==2020.12.5
 chardet==4.0.0
 click==7.1.2
@@ -27,3 +28,34 @@ urllib3==1.26.4
 WebOb==1.8.7
 Werkzeug==1.0.1
 wrapt==1.12.1
+=======
+certifi==2020.12.5
+chardet==4.0.0
+click==7.1.2
+debtcollector==1.22.0
+dnspython==1.16.0
+eventlet==0.31.0
+Flask==1.1.4
+funcsigs==1.0.2
+greenlet==1.1.0
+idna==2.10
+itsdangerous==1.1.0
+Jinja2==2.11.3
+MarkupSafe==1.1.1
+monotonic==1.6
+oslo==99.99.99
+oslo.context==2.23.1
+Paste==3.5.0
+PasteDeploy==2.1.1
+pbr==5.6.0
+pyparsing==2.4.7
+python-dateutil==2.8.1
+repoze.lru==0.7
+requests==2.25.1
+Routes==2.5.1
+six==1.16.0
+urllib3==1.26.4
+WebOb==1.8.7
+Werkzeug==1.0.1
+wrapt==1.12.1
+>>>>>>> 3d6bdca85a4e886ee78240eeedfe2f585fa35a9b
