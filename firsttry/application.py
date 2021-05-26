@@ -3,6 +3,9 @@ import sys
 import time
 from webob import Request, Response
 import json
+from oslo_log import log as logging
+from oslo_config import cfg
+LOG = logging.getLogger(__name__)
 
 
 class HelloApplication(object):
@@ -40,7 +43,7 @@ class SaveApplication(object):
     def __call__(self, environ, start_response):
         req = Request(environ)
         data = json.loads(req.body)
-        print data
+        LOG.info(u"this is {}".format(json.dumps(data)))
         self.save_to_local(data)
         res = Response()
         res.status = 200
