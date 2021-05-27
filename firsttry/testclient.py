@@ -16,7 +16,6 @@ def create_request(opr):
                 data = {'name': i}
                 r = requests.get("http://{}:233/hello".format(IP), params=data)
                 print r.text
-                time.sleep(1)
     elif opr == "save":
         params = {"title": u"晚上好", 'content': u"test1", 'description': u"none"}
         r = requests.post("http://{}:233/save".format(IP), json=params)
