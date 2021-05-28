@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 import sys
+import os
 import time
 from webob import Request, Response
 import json
@@ -51,7 +52,7 @@ class SaveApplication(object):
         return res(environ, start_response)
 
     def save_to_local(self, data):
-        file_path = '{}\\data.txt'.format(sys.path[0])
+        file_path = '{}/data.txt'.format(os.path.abspath('.'))
         with open(file_path, 'a+') as p:
             tmp = u'[{key}] {value}\n'
             for item in data.items():
