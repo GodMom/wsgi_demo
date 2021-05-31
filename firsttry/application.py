@@ -45,16 +45,16 @@ class SaveApplication(object):
 
     def __call__(self, environ, start_response):
         req = Request(environ)
-        data = json.loads(req.body)
         res = Response()
-        if data == "":
+        if req.body != "":
+            data = json.loads(req.body)
+            self.save_to_local(data)
+            res.body = "ok"
+        else:
+            # LOG.info(u"this is {}".format(json.dumps(data)))
             with open("/root/wsgi_demo/wsgi_demo/firsttry/save.html", 'r') as f:
                 data = f.read()
                 res.body = data.encode("utf8")
-        else:
-            # LOG.info(u"this is {}".format(json.dumps(data)))
-            self.save_to_local(data)
-            res.body = "ok"
         res.status = 200
         return res(environ, start_response)
 
