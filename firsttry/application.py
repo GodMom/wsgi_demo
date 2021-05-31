@@ -76,18 +76,18 @@ class SaveApplication(object):
         db = MySQLdb.connect("localhost", "root", "Xy269420+", "deep", charset="utf8")
         cursor = db.cursor()
         result = ''
-        sql = u"INSERT INTO beiwang(title, content, description) VALUES (%s, %s, %s)" % \
+        sql = u"INSERT INTO beiwang(title, content, description) VALUES ('%s', '%s', '%s')" % \
               (data.get('title', u"无"), data.get('content', u"无"), data.get('description', u""))
         sql = sql.encode("utf8")
         try:
             cursor.execute(sql)
             db.commit()
-            result = 'ok'
+            result = u"ok"
         except Exception as e:
             db.rollback()
-            result = str(type(e))
+            result = u"insert failed!"
         db.close()
-        return result
+        return result.encode("utf8")
 
 
 class ListApplication(object):
