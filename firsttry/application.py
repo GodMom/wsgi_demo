@@ -4,6 +4,7 @@ import os
 import time
 from webob import Request, Response
 import json
+import MySQLdb
 #from oslo_log import log as logging
 #from oslo_config import cfg
 #LOG = logging.getLogger(__name__)
@@ -48,7 +49,8 @@ class SaveApplication(object):
         res = Response()
         if req.body != "":
             data = json.loads(req.body)
-            self.save_to_local(data)
+            self.save_to_db(data)
+            # self.save_to_local(data)
             res.body = "ok"
         else:
             # LOG.info(u"this is {}".format(json.dumps(data)))
@@ -58,6 +60,7 @@ class SaveApplication(object):
         res.status = 200
         return res(environ, start_response)
 
+    # 存到本地文件
     def save_to_local(self, data):
         file_path = '{}'.format(DATA_ROUTE)
         with open(file_path, 'a+') as p:
@@ -67,6 +70,20 @@ class SaveApplication(object):
                 p.write(wr_str)
             p.write('\n')
 
+    # 存入数据库
+    def save_to_db(self, data):
+        db = MySQLdb.connect("localhost", "root", "Xy269420+", "deep", charset="utf8")
+        cursor = db.cursor()
+        sql = """INSERT INTO BEIWANG(title, content, description)
+                 VALUES ({title}, {content}, {description})
+                """.format(title=data.get('title', u"无"), content=data.get('content', u"无"),
+                           description=data.get('description', u"")).encode("utf8")
+        try:
+            cursor.execute(sql)
+            db.commit()
+        except:
+            db.rollback()
+        db.close()
 
 class ListApplication(object):
     def __init__(self, in_arg):
