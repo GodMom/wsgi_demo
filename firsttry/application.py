@@ -75,15 +75,15 @@ class SaveApplication(object):
     def save_to_db(self, data):
         db = MySQLdb.connect("localhost", "root", "Xy269420+", "deep", charset="utf8")
         cursor = db.cursor()
-        sql = u"INSERT INTO BEIWANG(title, content, description) \
-                 VALUES ({title}, {content}, {description}) \
-                ".format(title=data.get('title', u"无"), content=data.get('content', u"无"),
-                         description=data.get('description', u"")).encode("utf8")
+        sql = u"INSERT INTO BEIWANG(title, content, description) VALUES (%s, %s, %s)" % \
+              (data.get('title', u"无"), data.get('content', u"无"), data.get('description', u""))
+        sql = sql.encode("utf8")
         try:
             cursor.execute(sql)
             db.commit()
         except:
             db.rollback()
+
         db.close()
 
 
