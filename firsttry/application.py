@@ -85,7 +85,7 @@ class SaveApplication(object):
             result = 'ok'
         except Exception as e:
             db.rollback()
-            result = e.message
+            result = str(type(e))
         db.close()
         return result
 
