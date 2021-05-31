@@ -5,9 +5,10 @@ import time
 from webob import Request, Response
 import json
 import MySQLdb
-#from oslo_log import log as logging
-#from oslo_config import cfg
-#LOG = logging.getLogger(__name__)
+
+# from oslo_log import log as logging
+# from oslo_config import cfg
+# LOG = logging.getLogger(__name__)
 
 DATA_ROUTE = '/root/data.txt'
 
@@ -74,16 +75,17 @@ class SaveApplication(object):
     def save_to_db(self, data):
         db = MySQLdb.connect("localhost", "root", "Xy269420+", "deep", charset="utf8")
         cursor = db.cursor()
-        sql = """INSERT INTO BEIWANG(title, content, description)
-                 VALUES ({title}, {content}, {description})
-                """.format(title=data.get('title', u"无"), content=data.get('content', u"无"),
-                           description=data.get('description', u"")).encode("utf8")
+        sql = u"INSERT INTO BEIWANG(title, content, description) \
+                 VALUES ({title}, {content}, {description}) \
+                ".format(title=data.get('title', u"无"), content=data.get('content', u"无"),
+                         description=data.get('description', u"")).encode("utf8")
         try:
             cursor.execute(sql)
             db.commit()
         except:
             db.rollback()
         db.close()
+
 
 class ListApplication(object):
     def __init__(self, in_arg):
