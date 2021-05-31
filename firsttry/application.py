@@ -8,7 +8,8 @@ import json
 #from oslo_config import cfg
 #LOG = logging.getLogger(__name__)
 
-DATA_ROUTE='/root/data.txt'
+DATA_ROUTE = '/root/data.txt'
+
 
 class HelloApplication(object):
 
@@ -45,11 +46,16 @@ class SaveApplication(object):
     def __call__(self, environ, start_response):
         req = Request(environ)
         data = json.loads(req.body)
-        #LOG.info(u"this is {}".format(json.dumps(data)))
-        self.save_to_local(data)
         res = Response()
+        if data == "":
+            with open("/root/wsgi_demo/wsgi_demo/firsttry/save.html", 'r') as f:
+                data = f.read()
+                res.body = data.encode("utf8")
+        else:
+            # LOG.info(u"this is {}".format(json.dumps(data)))
+            self.save_to_local(data)
+            res.body = "ok"
         res.status = 200
-        res.body = "ok"
         return res(environ, start_response)
 
     def save_to_local(self, data):
