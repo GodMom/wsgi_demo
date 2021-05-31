@@ -53,7 +53,7 @@ class SaveApplication(object):
         else:
             # LOG.info(u"this is {}".format(json.dumps(data)))
             with open("/root/wsgi_demo/wsgi_demo/firsttry/save.html", 'r') as f:
-                data = f.read()
+                data = f.read().decode("utf8")
                 res.body = data.encode("utf8")
         res.status = 200
         return res(environ, start_response)
