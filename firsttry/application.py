@@ -60,9 +60,30 @@ class SaveApplication(object):
             p.write('\n')
 
 
+class ListApplication(object):
+    def __init__(self, in_arg):
+        self.in_arg = in_arg
+
+    def __call__(self, environ, start_response):
+        req = Request(environ)
+        res = Response()
+        file_path = '{}\\data.txt'.format(sys.path[0])
+        with open(file_path, 'rb') as f:
+            data = f.read()
+            content = u""
+            content += data.decode('utf8')
+            res.status = 200
+            res.body = content.encode('utf8')
+            return res(environ, start_response)
+
+
 def hi_factory(global_config, in_arg):
     return HelloApplication(in_arg)
 
 
 def save_factory(global_config, in_arg):
     return SaveApplication(in_arg)
+
+
+def list_factory(global_config, in_arg):
+    return ListApplication(in_arg)

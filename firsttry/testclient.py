@@ -20,6 +20,9 @@ def create_request(opr):
         params = {"title": u"晚上好", 'content': u"test1", 'description': u"none"}
         r = requests.post("http://{}:233/save".format(IP), json=params)
         print r.text
+    elif opr == "list":
+        r = requests.get("http://{}:233/list".format(IP))
+        print r.text
 
 
 if __name__ == '__main__':
