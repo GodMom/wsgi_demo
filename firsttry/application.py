@@ -50,9 +50,9 @@ class SaveApplication(object):
         res = Response()
         if req.body != "":
             data = json.loads(req.body)
-            self.save_to_db(data)
+            result = self.save_to_db(data)
             # self.save_to_local(data)
-            res.body = "ok"
+            res.body = "ok" if result else "no"
         else:
             # LOG.info(u"this is {}".format(json.dumps(data)))
             with open("/root/wsgi_demo/wsgi_demo/firsttry/save.html", 'r') as f:
@@ -75,16 +75,19 @@ class SaveApplication(object):
     def save_to_db(self, data):
         db = MySQLdb.connect("localhost", "root", "Xy269420+", "deep", charset="utf8")
         cursor = db.cursor()
+        result = False
         sql = u"INSERT INTO beiwang(title, content, description) VALUES (%s, %s, %s)" % \
               (data.get('title', u"无"), data.get('content', u"无"), data.get('description', u""))
         sql = sql.encode("utf8")
         try:
             cursor.execute(sql)
             db.commit()
+            result = True
         except:
             db.rollback()
-
+            result = False
         db.close()
+        return result
 
 
 class ListApplication(object):
