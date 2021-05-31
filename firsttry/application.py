@@ -8,6 +8,7 @@ import json
 #from oslo_config import cfg
 #LOG = logging.getLogger(__name__)
 
+DATA_ROUTE='/root/data.txt'
 
 class HelloApplication(object):
 
@@ -52,7 +53,7 @@ class SaveApplication(object):
         return res(environ, start_response)
 
     def save_to_local(self, data):
-        file_path = '{}/data.txt'.format(os.path.abspath('.'))
+        file_path = '{}'.format(DATA_ROUTE)
         with open(file_path, 'a+') as p:
             tmp = u'[{key}] {value}\n'
             for item in data.items():
@@ -68,7 +69,7 @@ class ListApplication(object):
     def __call__(self, environ, start_response):
         req = Request(environ)
         res = Response()
-        file_path = '{}\\data.txt'.format(sys.path[0])
+        file_path = '{}'.format(DATA_ROUTE)
         with open(file_path, 'rb') as f:
             data = f.read()
             content = u""
