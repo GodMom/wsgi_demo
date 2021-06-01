@@ -51,7 +51,7 @@ class SaveApplication(object):
         if req.body != "":
             data = json.loads(req.body)
             result = self.save_to_db(data)
-            # self.save_to_local(data)
+            self.save_to_local(data)
             res.body = result
         else:
             # LOG.info(u"this is {}".format(json.dumps(data)))
@@ -97,14 +97,21 @@ class ListApplication(object):
     def __call__(self, environ, start_response):
         req = Request(environ)
         res = Response()
-        file_path = '{}'.format(DATA_ROUTE)
-        with open(file_path, 'rb') as f:
-            data = f.read()
-            content = u""
-            content += data.decode('utf8')
-            res.status = 200
-            res.body = content.encode('utf8')
-            return res(environ, start_response)
+        content = u""
+        data = self.select_from_db()
+        content += data.encode("utf8")
+        res.status = 200
+        res.body = content.encode('utf8')
+        return res(environ, start_response)
+
+    def select_from_db(self):
+        db = MySQLdb.connect("localhost", "root", "Xy269420+", "deep", charset="utf8")
+        cursor = db.cursor()
+        sql = u"select * from beiwang"
+        cursor.execute(sql)
+        res = cursor.fetchall
+        print res
+        return res
 
 
 def hi_factory(global_config, in_arg):
