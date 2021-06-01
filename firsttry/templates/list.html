@@ -3,22 +3,28 @@
 <head>
 	<meta charset="utf-8">
 	<title>list</title>
+		<link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
 	<div id ="table_view">
-		<table id="list">
-			<tr>
-				<td>标题</td>
-				<td>内容</td>
-				<td>描述</td>
-			</tr>
-			{% for title,content,description in seq %}
-			<tr>
-				<td>{{ title }}</td>
-				<td>{{ content }}</td>
-				<td>{{ description }}</td>
-			</tr>
-			{% endfor %}
+		<table id="list" class="table table-bordered">
+			<caption>查询结果</caption>
+			<thead>
+				<tr>
+					<td>标题</td>
+					<td>内容</td>
+					<td>描述</td>
+				</tr>
+			</thead>
+			<tbody>
+				{% for title,content,description in seq %}
+				<tr>
+					<td>{{ title }}</td>
+					<td>{{ content }}</td>
+					<td>{{ description }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
 		</table>
 	</div>
 </body>
