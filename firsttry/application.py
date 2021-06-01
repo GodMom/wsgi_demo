@@ -5,6 +5,7 @@ import time
 from webob import Request, Response
 import json
 import MySQLdb
+from jinja2 import Environment, PackageLoader
 
 # from oslo_log import log as logging
 # from oslo_config import cfg
@@ -105,13 +106,20 @@ class ListApplication(object):
         return res(environ, start_response)
 
     def select_from_db(self):
+        def make_template(datas):
+            env = Environment(loader=PackageLoader("yourapplication", "templates"))
+            template = env.get_template("/root/wsgi_demo/wsgi_demo/firsttry/list.html")
+            result = template.render(list(datas))
+            print result
+            return result
+
         db = MySQLdb.connect("localhost", "root", "Xy269420+", "deep", charset="utf8")
         cursor = db.cursor()
         sql = u"select * from beiwang"
         cursor.execute(sql)
         res = cursor.fetchall()
-        print res
-        return res
+        data = make_template(res)
+        return data
 
 
 def hi_factory(global_config, in_arg):
@@ -124,3 +132,5 @@ def save_factory(global_config, in_arg):
 
 def list_factory(global_config, in_arg):
     return ListApplication(in_arg)
+
+
