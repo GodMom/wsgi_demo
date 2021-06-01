@@ -99,7 +99,7 @@ class ListApplication(object):
         res = Response()
         content = u""
         data = self.select_from_db()
-        content += data.encode("utf8")
+        content += data
         res.status = 200
         res.body = content.encode('utf8')
         return res(environ, start_response)
@@ -109,7 +109,7 @@ class ListApplication(object):
         cursor = db.cursor()
         sql = u"select * from beiwang"
         cursor.execute(sql)
-        res = cursor.fetchall
+        res = cursor.fetchall()
         print res
         return res
 
