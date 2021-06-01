@@ -5,7 +5,7 @@ import time
 from webob import Request, Response
 import json
 import MySQLdb
-from jinja2 import Environment, PackageLoader
+from jinja2 import Environment, FileSystemLoader
 
 # from oslo_log import log as logging
 # from oslo_config import cfg
@@ -107,7 +107,7 @@ class ListApplication(object):
 
     def select_from_db(self):
         def make_template(datas):
-            env = Environment(loader=PackageLoader("/root/wsgi_demo/wsgi_demo/firsttry/", "templates"))
+            env = Environment(loader=FileSystemLoader("/root/wsgi_demo/wsgi_demo/firsttry/templates"))
             template = env.get_template("list.html")
             result = template.render(list(datas))
             print result
