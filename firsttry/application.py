@@ -56,7 +56,7 @@ class SaveApplication(object):
             res.body = result
         else:
             # LOG.info(u"this is {}".format(json.dumps(data)))
-            with open("/root/wsgi_demo/wsgi_demo/firsttry/save.html", 'r') as f:
+            with open("/root/wsgi_demo/wsgi_demo/firsttry/templates/save.html", 'r') as f:
                 data = f.read().decode("utf8")
                 res.body = data.encode("utf8")
         res.status = 200
@@ -107,8 +107,8 @@ class ListApplication(object):
 
     def select_from_db(self):
         def make_template(datas):
-            env = Environment(loader=PackageLoader("yourapplication", "templates"))
-            template = env.get_template("/root/wsgi_demo/wsgi_demo/firsttry/list.html")
+            env = Environment(loader=PackageLoader("/root/wsgi_demo/wsgi_demo/firsttry/", "templates"))
+            template = env.get_template("list.html")
             result = template.render(list(datas))
             print result
             return result
