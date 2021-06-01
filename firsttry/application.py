@@ -109,7 +109,7 @@ class ListApplication(object):
         def make_template(datas):
             env = Environment(loader=FileSystemLoader("/root/wsgi_demo/wsgi_demo/firsttry/templates"))
             template = env.get_template("list.html")
-            result = template.render(list(datas))
+            result = template.render(seq=list(datas))
             print result
             return result
 
