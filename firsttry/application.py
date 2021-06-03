@@ -52,7 +52,6 @@ class SaveApplication(object):
         if req.body != "":
             data = json.loads(req.body)
             result = self.save_to_db(data)
-            self.save_to_local(data)
             res.body = result
         else:
             # LOG.info(u"this is {}".format(json.dumps(data)))
@@ -77,8 +76,14 @@ class SaveApplication(object):
         db = MySQLdb.connect("localhost", "root", "Xy269420+", "deep", charset="utf8")
         cursor = db.cursor()
         result = ''
+        title=data.get('title', u"无")
+        content=data.get('content', u"无")
+        description=data.get('description', u"")
+        if not title or not content:
+            result = u"null data"
+            return result.encode("utf8")
         sql = u"INSERT INTO beiwang(title, content, description) VALUES ('%s', '%s', '%s')" % \
-              (data.get('title', u"无"), data.get('content', u"无"), data.get('description', u""))
+              (title, content, description)
         sql = sql.encode("utf8")
         try:
             cursor.execute(sql)

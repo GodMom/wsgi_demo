@@ -29,7 +29,13 @@
 	</form>
 	<script type="text/javascript">
 		$(function ($){
-			var res;
+                    $("#submit").click( function(){
+			let title=$("input#title").val();
+                        let content=$("textarea#content").val();
+                        let description=$("textarea#description").val();
+                        console.log(title);
+                        console.log(content);
+                        data={title:title,content:content,description:description}
 			$.ajax({
 				header :{
 					Accept: "application/json; charset=utf-8",
@@ -37,14 +43,20 @@
 				},
 				async: false,
 				type: "POST",
-				dataType: "json",
+				dataType: "text",
 				url:"/save",
-				data: Json.stringify($("#save_form").serialize()),
+				data: JSON.stringify(data),
 				success: function(results) {
-					back1 = results;
+					back = results;
 				},
 			});
-			console.log(back1);
+			if(back=="ok"){
+                            alert("保存成功!")
+                        }
+                        else{
+                            alert("保存失败了，我也不知道为什么")
+                        }
+                   });
 		});
 	</script>
 </body>
