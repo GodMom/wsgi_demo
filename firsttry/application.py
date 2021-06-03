@@ -110,7 +110,6 @@ class ListApplication(object):
             env = Environment(loader=FileSystemLoader("/root/wsgi_demo/wsgi_demo/firsttry/templates"))
             template = env.get_template("list.html")
             result = template.render(seq=list(datas))
-            print result
             return result
 
         db = MySQLdb.connect("localhost", "root", "Xy269420+", "deep", charset="utf8")
