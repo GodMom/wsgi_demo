@@ -3,25 +3,49 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"></script>
 	<title>保存</title>
+	<style>
+
+	</style>
 </head>
 <body>
-	<form class="bs-example bs-example-form" role="form">
+	<form class="bs-example bs-example-form" role="form" id="save_form">
 		<div class="input-group">
 			<span class="input-group-addon">标题</span>
 			<input type="text" class="form-control" id="title">
 		</div>
 		<div class="input-group">
 			<span class="input-group-addon">内容</span>
-			<input type="text" class="form-control" id="content">
+			<textarea class="form-control" rows="2" id="content"></textarea>
 		</div>
 		<div class="input-group">
 			<span class="input-group-addon">描述</span>
-			<input type="text" class="form-control" id="description">
+			<textarea class="form-control" rows="4" id="description"></textarea>
 		</div>
 		<div class="btn-group">
-			<button type="button" class="btn btn-primary">提交</button>
+			<button type="button" class="btn btn-primary" id="submit">提交</button>
 		</div>
 	</form>
+	<script type="text/javascript">
+		$(function ($)){
+			var res;
+			$.ajax({
+				header :{
+					Accept: "application/json; charset=utf-8",
+					contentType: "application/x-www-form-urlencoded",
+				}
+				async: false,
+				type: "POST",
+				dataType: "json",
+				url:"/save",
+				data: Json.stringify($("#save_form").serialize()),
+				success: function(results) {
+					back1 = results;
+				},
+			});
+			console.log(back1);
+		}
+	</script>
 </body>
 </html>
